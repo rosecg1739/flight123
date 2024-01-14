@@ -1,0 +1,24 @@
+<%- include('../partials/navbar') %>
+<h1><%= flight.airline %> - <%= flight.flightNo %></h1>
+<p>Departing from <%= flight.airport %> on <%= flight.departs.toISOString().split('T')[0] %></p>
+<h2>Destinations</h2>
+<ul>
+  <% flight.destinations.forEach(destination => { %>
+    <li><%= destination.airport %> - <%= destination.arrival.toISOString().split('T')[0] %></li>
+  <% }) %>
+</ul>
+<h2>Add a Destination</h2>
+<form action="/flights/<%= flight._id %>/destinations" method="POST">
+  <label for="airport">Airport:</label>
+  <select name="airport" id="airport">
+    <option value="AUS">AUS</option>
+    <option value="DFW">DFW</option>
+    <option value="DEN">DEN</option>
+    <option value="LAX">LAX</option>
+    <option value="SAN">SAN</option>
+  </select>
+  <label for="arrival">Arrival Date and Time:</label>
+  <input type="datetime-local" id="arrival" name="arrival">
+  <input type="submit" value="Add Destination">
+  <a href="/tickets/new?flight=<%= flight._id %>">New Ticket</a>
+</form>
